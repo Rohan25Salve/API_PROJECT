@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import utiltiy.ConfigReader;
@@ -19,7 +18,6 @@ public class tokenGenration {
 
     @Given("the login API is available")
     public void the_login_api_is_available() {
-        utils.ExtentReportUtil.startTest("Open URL");
 
         String baseUrl = ConfigReader.getBaseUrl();
         String loginEndpoint = ConfigReader.getLoginEndpoint();
@@ -49,7 +47,7 @@ public class tokenGenration {
     @Then("I should receive a token in the response")
     public void i_should_receive_a_token_in_the_response() {
         String tokenPattern = "^[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+$";
-        utils.ExtentReportUtil.logPass("Token ID generated"+ token);
+
         Assert.assertTrue("Token should have a valid format", token.matches(tokenPattern));
 
     }
@@ -57,7 +55,7 @@ public class tokenGenration {
     @Then("the token should not be empty")
     public void the_token_should_not_be_empty() {
         token = response.jsonPath().getString("token");
-        utils.ExtentReportUtil.logPass("Token ID generated"+ token);
+
         Assert.assertNotNull("Token should not be null", token);
 
     }
